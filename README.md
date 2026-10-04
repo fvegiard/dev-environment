@@ -51,7 +51,8 @@ dev-environment/
 │   └── references.md          ← 25 primary references (specs, docs, repos)
 ├── scripts/
 │   ├── set-flags.js           ← apply the 12 flags via CDP (chrome://flags)
-│   └── cdp-eval.js            ← evaluate JS on a Chrome Dev tab via CDP
+│   ├── cdp-eval.js            ← evaluate JS on a Chrome Dev tab via CDP
+│   └── stream-chrome.js       ← stream Chrome Dev 157 into a web page (remote control)
 ├── webtop/
 │   └── docker-compose.yml     ← the Ubuntu+Xfce desktop container
 ├── ENVIRONMENT-MAP.md         ← full machine map (Docker, WSL, VMs, keys, MCP)
@@ -93,6 +94,28 @@ docker compose -f webtop/docker-compose.yml up -d
 ```powershell
 node scripts/cdp-eval.js "navigator.userAgent"
 ```
+
+### 5. Stream Chrome Dev 157 into the Copilot app (remote control)
+
+Streams the **existing** Chrome Dev 157 (with all AI flags) into a web page — no new
+browser launched. Open the URL in the Copilot browser canvas to see and control it.
+
+```powershell
+node scripts/stream-chrome.js
+# → http://127.0.0.1:8791/
+```
+
+| Route | Purpose |
+|---|---|
+| `/` | remote-control UI |
+| `/stream` | MJPEG video stream (`Page.captureScreenshot`) |
+| `/metrics` | viewport size + target URL |
+| `/input` | mouse/keyboard forwarding (`Input.dispatchMouseEvent` / `insertText`) |
+| `/eval` | DOM evaluation (`Runtime.evaluate`) |
+
+Control is **DOM + mouse**, not screenshots: `/eval` runs arbitrary JS in the page,
+`/input` forwards real mouse/keyboard events. This is the same CDP protocol
+Playwright/Puppeteer build on.
 
 ---
 
