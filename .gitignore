@@ -1,0 +1,20 @@
+# Large binaries — not committed (v86 WASM emulator assets)
+v86-work/
+*.iso
+*.bin
+*.wasm
+*.tgz
+
+# Node
+node_modules/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
+
+# Secrets — never commit
+.env
+*.pem
+*.key
+id_*
