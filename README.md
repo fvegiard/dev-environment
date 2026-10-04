@@ -52,7 +52,9 @@ dev-environment/
 ├── scripts/
 │   ├── set-flags.js           ← apply the 12 flags via CDP (chrome://flags)
 │   ├── cdp-eval.js            ← evaluate JS on a Chrome Dev tab via CDP
-│   └── stream-chrome.js       ← stream Chrome Dev 157 into a web page (remote control)
+│   ├── stream-chrome.js       ← stream the page viewport (CDP remote control)
+│   ├── stream-window.js       ← stream the FULL window (chrome UI + content)
+│   └── input-helper.ps1       ← OS-level input injector (SendInput) for stream-window
 ├── webtop/
 │   └── docker-compose.yml     ← the Ubuntu+Xfce desktop container
 ├── ENVIRONMENT-MAP.md         ← full machine map (Docker, WSL, VMs, keys, MCP)
@@ -116,6 +118,30 @@ node scripts/stream-chrome.js
 Control is **DOM + mouse**, not screenshots: `/eval` runs arbitrary JS in the page,
 `/input` forwards real mouse/keyboard events. This is the same CDP protocol
 Playwright/Puppeteer build on.
+
+### 6. Stream the FULL window (chrome UI + content) — remote control
+
+`stream-chrome.js` captures only the page viewport. `stream-window.js` captures the
+**entire browser window** — tabs, address bar, toolbar, and page — using ffmpeg
+`gdigrab`, and forwards mouse/keyboard at the **OS level** (SendInput), so clicking
+tabs and the address bar works too, not just the page.
+
+```powershell
+node scripts/stream-window.js
+# → http://127.0.0.1:8792/
+```
+
+| Route | Purpose |
+|---|---|
+| `/` | full-window remote-control UI |
+| `/stream` | MJPEG video stream (ffmpeg `gdigrab` → whole window) |
+| `/metrics` | window bounds + target URL |
+| `/input` | OS-level mouse/keyboard (`SendInput` via `input-helper.ps1`) |
+| `/eval` | DOM evaluation (`Runtime.evaluate`) |
+
+Requires `ffmpeg` on PATH. The window bounds are auto-detected (DPI-aware) at
+startup; input coordinates are normalized (0–1) and mapped back to absolute screen
+coordinates.
 
 ---
 
