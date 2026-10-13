@@ -91,6 +91,23 @@ uv run python -c "import x; print(x.__file__)"
 
 If it isn't installed, say so and offer to install it. Do not write code that assumes it exists. If a library doesn't exist or doesn't do what you need, say that too. Do not invent a plausible-looking package name. `uv add` or `pnpm add` is often the answer. Inventing an API is never the answer.
 
+### Running commands: one shell process per command
+
+Each tool call starts its own Bash process, runs the text, and exits. It is not the terminal window Francis has open. On the Legion that shell is Git Bash (`C:\Program Files\Git\usr\bin\bash.exe`): Copilot calls it as `bash -lc '...'`, Claude Code through its Bash tool.
+
+- **Nothing carries over that you did not put in the command.** Start with `cd <path>` or use full paths (`git -C /d/Github/repo status`). Do not rely on variables from an earlier call.
+- **One job per command, and stop at the first failure.** Chain the steps with `&&`, or start with `set -e`. A later step must never run on top of an error.
+- **End with labeled read-backs.** Print the state you just changed (`printf "\n--- after ---\n"; git status --short --branch`) so the same output proves the result.
+- **Keep risky steps separate.** A delete, a force, or a push goes in its own command, not at the end of a long chain. It gets reviewed alone, and a blocked step does not take the rest down with it.
+- **Long-running programs** (servers, watchers, Desktop Commander remote) go in a live terminal or a background task. Read their output instead of waiting on them, and stop only the instance you started (Ctrl+C in its terminal, or its task ID).
+
+Legion specifics (verified 2026-10-13):
+
+- Three `bash.exe` are on PATH and only the first is Git Bash. `command -v bash` must print `/usr/bin/bash`, and paths look like `/c/Users/fvegi` and `/d/Github`.
+- No `~/.bashrc`, `~/.bash_profile` or `~/.profile` exists, so a login shell (`-l`) loads nothing custom.
+- Git Bash rewrites arguments that start with `/`. For native Windows tools double the slash (`tasklist //v`, `reg query "HKCU\Environment" //v NAME`), and drop the leading slash for `gh api user/...`.
+- In Claude Code, `~/.claude/hooks/guard.js` blocks some recursive deletes (`rm -rf`) until Francis confirms. Delete named files instead, or ask him.
+
 ## 2. SEARCH BEFORE YOU WRITE
 
 Do not write API-calling code from memory. When you touch anything external (a library API, a CLI flag, a protocol, a config format, an error message), verify first.
