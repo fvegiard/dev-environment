@@ -1,4 +1,45 @@
-# Environment Map — fvegiard (verified live 2026-10-04)
+# Environment Map — fvegiard
+
+Francis has three computers. This file covers the **Legion** (Lenovo Legion 9 18IAX10, hostname `fvdev`). Run `hostname` before trusting anything here on another computer.
+
+## Legion status (verified 2026-10-13, after a fresh Windows reinstall)
+
+Every line in this section comes from a command run on the Legion on 2026-10-13.
+
+| Area | State on the Legion |
+|---|---|
+| OS | Windows 11 Pro 10.0.26300, Git Bash as the agent shell |
+| Runtimes | Node 26.11.1, npm 12.2.0, pnpm 12.11.2, Bun 1.4.3, yarn 1.22.22, uv 0.13.0, Python 3.14.7 (uv-managed), TypeScript 7.0.2, Go 1.27.0, Rust 1.99.0 |
+| Git | git 2.56.0, GitHub CLI 2.102.0, logged in as `fvegiard` |
+| Agent CLIs on PATH | claude 2.1.292, codex-cli 0.161.0, pi 1.2.0, hermes, ollama 0.40.3 |
+| Editors on PATH | Zed, VS Code |
+| Browsers installed | Google Chrome (stable), Microsoft Edge, Firefox Developer Edition |
+| WSL distros | Ubuntu-26.04 (default), Ubuntu |
+| Claude Code MCP | context7, the claude.ai connectors, and the GitHub plugin (reads the user variable `GITHUB_PERSONAL_ACCESS_TOKEN`) |
+| Agent tooling | `C:\Users\fvegi\dev-tools` (`smoke-test.sh`, `snap.ts`, `sync-agent-rules.mjs`, `audit-logs.mjs`) |
+
+Not present on the Legion today, although the 2026-10-04 map below lists them:
+
+- Chrome Dev 157 (`C:\Program Files\Google\Chrome Dev`)
+- `C:\Copilot\llm-config-audit` (the old master contract), `C:\AgentRuntimes`, `~/.agents`
+- `~/HyperV`, `~/.agent-browsers`
+- `docker`, `ffmpeg` and `mise` on the Windows PATH
+- WSL distros debian, kali-linux, ubuntu-resolute and docker-desktop
+- SSH keys in `~/.ssh`
+
+Not re-checked on 2026-10-13: Hyper-V VMs, anything inside the WSL distros, and the per-tool MCP configs listed below.
+
+### Contract files on the Legion
+
+- Master: `C:\Users\fvegi\CLAUDE.md`. [`OPERATING-CONTRACT.md`](OPERATING-CONTRACT.md) in this repo is a byte-identical copy.
+- Copies that carry the same contract: `C:\Users\fvegi\AGENTS.md` (contract, then environment rules), `C:\Users\fvegi\.claude\CLAUDE.md` and `C:\Users\fvegi\.copilot\copilot-instructions.md`.
+- Change the master first, then the copies.
+
+---
+
+# Map from 2026-10-04 (not re-verified since)
+
+The sections below are kept as they were on 2026-10-04. Check each item before relying on it.
 
 ## Identity & accounts
 - GitHub: `fvegiard` / `fvegiard@hotmail.com` (gh credential helper)

@@ -8,6 +8,12 @@ This is the **dev environment** for Francis (fvegiard). It is the single place w
 the whole machine — containers, Linux distros, terminals, remote hosts, and the
 browser's own built-in intelligence — lives behind one URL.
 
+> **Status on the Legion, 2026-10-13.** Francis has three computers; this repo is for
+> the Legion (Lenovo Legion 9 18IAX10, hostname `fvdev`). After a fresh Windows
+> reinstall, Chrome Dev 157, `docker` and `ffmpeg` are not installed there, so the
+> quick start below does not run on it yet. What is installed today is listed at the
+> top of [`ENVIRONMENT-MAP.md`](ENVIRONMENT-MAP.md).
+
 ---
 
 ## What this is
@@ -58,7 +64,7 @@ dev-environment/
 ├── webtop/
 │   └── docker-compose.yml     ← the Ubuntu+Xfce desktop container
 ├── ENVIRONMENT-MAP.md         ← full machine map (Docker, WSL, VMs, keys, MCP)
-├── OPERATING-CONTRACT.md      ← the Mavis persona + rules
+├── OPERATING-CONTRACT.md      ← operating contract for coding agents (copy of the Legion's CLAUDE.md)
 └── environment-map.html       ← interactive force-directed graph (96 nodes)
 ```
 

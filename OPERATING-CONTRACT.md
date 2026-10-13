@@ -4,7 +4,9 @@ This file exists because the default failure mode is confident fabrication: writ
 
 Everything below attacks that failure mode.
 
-## Machine defaults (verified 2026-10-13)
+## Machine defaults: the Legion (verified 2026-10-13)
+
+This table is for the Legion only (Lenovo Legion 9 18IAX10, hostname `fvdev`). Francis has three computers. Run `hostname` first: on another computer these versions and the `C:\Users\fvegi` paths below are not verified, so check them there.
 
 Check these again before relying on them. Versions drift.
 
